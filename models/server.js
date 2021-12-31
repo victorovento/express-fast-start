@@ -7,6 +7,7 @@ class Server {
     this.app = express();
     this.port = process.env.PORT;
 
+    this.usersRoutePath = '/api/users';
     // Middlewares
     this.middlewares();
     // RUtas
@@ -19,35 +20,7 @@ class Server {
   }
 
   routes() {
-    this.app.get("/api", (req, res) => {
-      res.status(501).json({
-        msg: "Get Endpoint",
-      });
-    });
-
-    this.app.put("/api", (req, res) => {
-      res.status(501).json({
-        msg: "Put Endpoint",
-      });
-    });
-
-    this.app.post("/api", (req, res) => {
-      res.status(501).json({
-        msg: "Post Endpoint",
-      });
-    });
-
-    this.app.delete("/api", (req, res) => {
-      res.status(501).json({
-        msg: "Delete Endpoint",
-      });
-    });
-
-    this.app.link("/api", (req, res) => {
-      res.status(501).json({
-        msg: "LINK Endpoint",
-      });
-    });
+      this.app.use(this.usersRoutePath, require('../routes/user'));
   }
 
   listen() {
@@ -55,6 +28,7 @@ class Server {
       console.log("Server running in port ", this.port);
     });
   }
+  
 }
 
 module.exports = Server;
